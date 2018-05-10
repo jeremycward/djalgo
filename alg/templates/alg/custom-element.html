@@ -1,0 +1,88 @@
+<link rel="import"  href="https://polygit.org/components/polymer/polymer-element.html">
+
+
+<dom-module id="picture-frame">
+
+  <template>
+    <!-- scoped CSS for this element -->
+    <style>
+      div {
+        display: inline-block;
+        background-color: #ddf;
+        border-radius: 8px;
+        padding: 4px;
+      }
+    </style>
+    <div>
+      <!-- any children are rendered here -->
+      <slot></slot>
+    </div>
+  </template>
+
+  <script>
+    class PictureFrame extends Polymer.Element {
+      static get is() { return "picture-frame"; }
+    }
+    customElements.define(PictureFrame.is, PictureFrame);
+  </script>
+
+</dom-module>
+
+
+
+<dom-module id="job-phase">
+
+  <template>
+    <!-- bind to the "owner" property -->
+    Job phase
+  </template>
+
+  <script>
+    class JobPhaseTag extends Polymer.Element {
+      static get is() { return "job-phase"; }
+      // configure owner property
+      static get properties() {
+        return {
+          name: {
+            type: String,
+            value: "Phase",
+          }
+        };
+      }
+    }
+    customElements.define(JobPhaseTag.is, JobPhaseTag);
+  </script>
+
+</dom-module>
+
+
+<dom-module id="algo-job-report">
+
+  <template>
+     bind to the "owner" property
+    This is <b>[[owner]]</b>'s name-tag element.
+    <div> <slot></slot></div>
+    <slot></slot>
+  </template>
+
+  <script>
+    class JobReportTag extends Polymer.Element {
+      static get is() { return "algo-job-report"; }
+      // configure owner property
+      static get properties() {
+        return {
+          owner: {
+            type: String,
+            value: "Daniel",
+          }
+        };
+      }
+    }
+    customElements.define(JobReportTag.is, JobReportTag);
+  </script>
+
+</dom-module>
+
+
+
+

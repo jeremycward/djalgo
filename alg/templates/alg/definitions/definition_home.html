@@ -1,0 +1,66 @@
+{% extends "../base.html" %}
+
+{% block title %}Monitoring Content{% endblock %}
+
+
+{% block sidebar %}
+    <nav class="nav nav-pills flex-column">
+
+        {% for index in object_list %}
+            <a class="nav-link" href="{% url 'definitions' forloop.counter %}"> {{ index.name }}</a>
+        {% endfor %}
+
+    </nav>
+{% endblock %}
+
+
+{% block content %}
+    {% if selected_algo_index %}
+        <h2>{{ selected_algo_index.name }}</h2>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-3">
+                    <div>Name:</div>
+                </div>
+                <div class="col-9">
+                    {{ selected_algo_index.name }}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-3">
+                    <div>Business Center:</div>
+                </div>
+                <div class="col-9">
+                    {{ selected_algo_index.businessCenter }}
+                </div>
+            </div>
+
+        </div>
+
+        <table>
+            <thead>
+              <tr>
+                  <td>Name</td>
+                  <td>Bus.Center</td>
+                  <td>Bbg Ticker</td>
+
+              </tr>
+            </thead>
+            {% for member in members %}
+                <tr>
+                    <td>{{ member.name}}</td>
+                    <td>{{ member.businessCenter}}</td>
+                    <td>{{ member.bbgTicker}}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+
+            </tr>
+        </table>
+
+
+
+    {% endif %}
+{% endblock %}

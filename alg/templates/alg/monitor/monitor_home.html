@@ -1,0 +1,52 @@
+{% extends "../base.html" %}
+{% block title %}Monitoring Content{% endblock %}
+{% block sidebar %}
+    <input id="date" type="date">
+{% endblock %}
+
+{% block content %}
+    {% with PHASE_DETAILS_PREFIX="phaseDetails" PHASE_CONTROLLER_PREFIX="phaseButton" %}
+
+        {% for job in monitor_report %}
+            <div id="{{ job.id }}">
+
+                <div class="row mt-2">
+                    <div class="ml-2">
+                        <algo-header caption="{{ job.id }} {{ job.definition.name }}">
+                            <lifecycleEvents>
+                                {% for event in job.lifeCycleEvents %}
+                                    <event type="{{ event.type }}" timestamp="{{ event.timeStamp }}"/>
+                                {% endfor %}
+                            </lifecycleEvents>
+                        </algo-header>
+                    </div>
+
+                    {% for phase in  job.phases %}
+                        <div class="ml-2">
+                            <algo-phase caption="{{ phase.phaseDefinition.name }}"
+                                        id="{{ job.id }}{{ forloop.counter }}"
+                                        detailsId="#{{ PHASE_DETAILS_PREFIX }}{{ job.id }}_{{ forloop.counter }}"
+                                        controllerId="#{{ PHASE_CONTROLLER_PREFIX }}{{ job.id }}_{{ forloop.counter }}">
+                                <summary>
+                                    {% for slice in phase.slices %}
+                                        <slice status="{{ slice.type }}" value="{{ slice.value }}"/>
+                                    {% endfor %}
+                                </summary>
+                            </algo-phase>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row ">
+                    {% for phase in job.phases %}
+                        <div id="{{ PHASE_DETAILS_PREFIX }}{{ job.id }}_{{ forloop.counter }}"
+                             aria-labelledby="{{ PHASE_CONTROLLER_PREFIX }}{{ job.id }}_{{ forloop.counter }}"
+                             data-parent="#{{ job.id }}"
+                             class="collapse ">
+                            {% include phase.phaseDefinition.details_template %}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    {% endwith %}
+{% endblock %}

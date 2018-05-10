@@ -1,0 +1,8 @@
+<h1>Algo Index List</h1>
+<ul>
+{% for index in object_list %}
+    <li>{{ index.name }} </li>
+{% empty %}
+    <li>No Indexes yet.</li>
+{% endfor %}
+</ul>
